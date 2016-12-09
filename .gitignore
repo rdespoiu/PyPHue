@@ -18,3 +18,5 @@ setup.py
 .Trashes
 ehthumbs.db
 Thumbs.db
+MANIFEST
+dist

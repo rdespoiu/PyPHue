@@ -1,7 +1,6 @@
 import sys
 import requests
 import json
-from pyphueexceptions import *
 
 
 class PyPHue:
@@ -209,3 +208,17 @@ class PyPHue:
         if response.ok:
             data['json'] = response.json()
         return data
+
+
+#####################
+# CUSTOM EXCEPTIONS #
+#####################
+
+class IPError(Exception):
+    ''' Raise when the Hue Bridge IP address cannot be resolved '''
+
+class UserError(Exception):
+    ''' Raise when PyPHue is initialized with an invalid user '''
+
+class BridgeError(Exception):
+    ''' Raise when the button on the Hue Bridge has not been pressed '''
