@@ -1,4 +1,6 @@
 # PyPHue
+![Alt text](https://github.com/rdespoiu/PyPHue/blob/master/pyphue.png?raw=true)
+
 Official Hue API Documentation: https://www.developers.meethue.com/
 
 ### Overview
