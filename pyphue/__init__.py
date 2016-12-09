@@ -1,1 +1,1 @@
-from PyPHue import PyPHue
+from PyPHue import *
