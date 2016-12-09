@@ -2,7 +2,7 @@
 Official Hue API Documentation: https://www.developers.meethue.com/
 
 ### Overview
-PyPHue is a simple Python library designed to make interfacing with the Phillips Hue API easy.
+PyPHue is a simple Python library designed to make interfacing with the Phillips Hue API easy. It can be used with Python 2 and 3.
 
 ### What can it do?
 - Turn lights on/off
