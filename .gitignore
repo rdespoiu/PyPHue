@@ -2,10 +2,12 @@
 #######
 setup.py
 
-
 # .pyc #
 #######
 *.pyc
+
+# .cfg #
+*.cfg
 
 # OS Generated #
 ################
