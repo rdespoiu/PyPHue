@@ -167,7 +167,7 @@ class PyPHue:
         if self.wizard:
             print('Press the button on the Hue Bridge to authenticate')
             print('Press any key to continue once you have completed this step')
-            raw_input() if PYTHON_VERSION < 3 else input()
+            raw_input() if self.PYTHON_VERSION < 3 else input()
 
         response = self.post(self.url(self.ip, 'api'), {'devicetype': '{}#{}'.format(self.AppName, self.DeviceName)})
 
