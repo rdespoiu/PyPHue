@@ -222,3 +222,11 @@ class UserError(Exception):
 
 class BridgeError(Exception):
     ''' Raise when the button on the Hue Bridge has not been pressed '''
+
+
+####################################
+# SETUP (FOR USING AS PYPI MODULE) #
+####################################
+
+def setup(ip = None, user = None, AppName = 'My_Hue_App', DeviceName = 'Default_Device:JohnDoe', wizard = False):
+    return PyPHue(ip, user, AppName, DeviceName, wizard)
