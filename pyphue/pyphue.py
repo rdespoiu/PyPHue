@@ -102,8 +102,11 @@ class PyPHue:
 
     # Returns true if the light is on, false if not
     def isLightOn(self, lightID):
-        state = self.getLight(lightID)['json']['state']['on']
-        return state
+        if self.cacheValues:
+            return self.cachedLights[lightID]["isOn"]
+        else:
+            state = self.getLight(lightID)['json']['state']['on']
+            return state
 
     #########################################
     # HUE/BRIGHTNESS/SATURATION CONTROLLERS #
@@ -115,8 +118,11 @@ class PyPHue:
 
     # Returns the brightness value of specified light
     def getBrightness(self, lightID):
-        response = self.getLight(lightID)
-        return response['json']['state']['bri']
+        if self.cacheValues:
+            return self.cachedLights[lightID]["brightness"]
+        else:
+            response = self.getLight(lightID)
+            return response['json']['state']['bri']
 
     # Sets the brightness value for specified light
     def setBrightness(self, lightID, brightness):
@@ -127,8 +133,11 @@ class PyPHue:
 
     # Returns the saturation value of specified light
     def getSaturation(self,lightID):
-        response = self.getLight(lightID)
-        return response['json']['state']['sat']
+        if self.cacheValues:
+            return self.cachedLights[lightID]["saturation"]
+        else:
+            response = self.getLight(lightID)
+            return response['json']['state']['sat']
 
     # Sets the saturation value for specified light
     def setSaturation(self, lightID, saturation):
@@ -139,8 +148,11 @@ class PyPHue:
 
     # Returns the hue value of spepcified light
     def getHue(self, lightID):
-        response = self.getLight(lightID)
-        return response['json']['state']['hue']
+        if self.cacheValues:
+            return self.cachedLights[lightID]["hue"]
+        else:
+            response = self.getLight(lightID)
+            return response['json']['state']['hue']
 
     # Sets the hue value for specified light
     def setHue(self, lightID, hue):
