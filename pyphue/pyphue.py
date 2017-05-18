@@ -2,7 +2,6 @@ import sys
 import requests
 import json
 
-
 class PyPHue:
     PYTHON_VERSION = sys.version_info.major
 
@@ -37,16 +36,42 @@ class PyPHue:
                     PyPHue will prompt you to press the button on the bridge when creating a user.
     '''
 
-    def __init__(self, ip = None, user = None, AppName = 'My_Hue_App', DeviceName = 'Default_Device:JohnDoe', wizard = False):
+    def __init__(self, ip = None, user = None, AppName = 'My_Hue_App', DeviceName = 'Default_Device:JohnDoe', wizard = False, cacheValues = False):
         self.AppName = AppName
         self.DeviceName = DeviceName
         self.wizard = wizard
+        self.cacheValues = cacheValues
 
         self.ip = self.validateIP(ip) if ip else self.getBridgeIP()
         self.user = self.validateUser(user) if user else self.createUser()
         self.baseURL = '{}/api/{}'.format(self.ip, self.user)
 
         self.mapLights()
+
+        if (self.cacheValues): #If cacheValues is set to true, find all the current values of the lights and store them locally.
+            self.cachedLights = {}
+            for light in self.lightIDs:
+                response = self.getLight(light)['json']['state']
+
+                brightness = response['bri']
+                saturation = None
+                hue = None
+                isOn = response['on']
+
+                if 'sat' in response.keys():
+                    saturation = response['sat']
+
+                if 'hue' in response.keys():
+                    hue = response['hue']
+
+                self.cachedLights[light] = {
+                    "brightness" : brightness,
+                    "saturation" : saturation,
+                    "hue" : hue,
+                    "isOn" : isOn
+                }
+
+
 
 
     ###########################
@@ -57,18 +82,28 @@ class PyPHue:
     def toggle(self, lightID):
         state = self.getLight(lightID)['json']['state']['on']
         response = self.putLight(lightID, {'on': not state})
+        if self.cacheValues:
+            self.cachedLights[lightID]["isOn"] = not state
         return response
 
     # Sets the state of specified light to False (off)
     def turnOff(self, lightID):
         response = self.putLight(lightID, {'on': False})
+        if self.cacheValues:
+            self.cachedLights[lightID]["isOn"] = False
         return response
 
     # Sets the state of specified light to True (on)
     def turnOn(self, lightID):
         response = self.putLight(lightID, {'on': True})
+        if self.cacheValues:
+            self.cachedLights[lightID]["isOn"] = True
         return response
 
+    # Returns true if the light is on, false if not
+    def isLightOn(self, lightID):
+        state = self.getLight(lightID)['json']['state']['on']
+        return state
 
     #########################################
     # HUE/BRIGHTNESS/SATURATION CONTROLLERS #
@@ -86,6 +121,8 @@ class PyPHue:
     # Sets the brightness value for specified light
     def setBrightness(self, lightID, brightness):
         response = self.putLight(lightID, {'bri': brightness})
+        if self.cacheValues:
+            self.cachedLights[lightID]["brightness"] = brightness
         return response
 
     # Returns the saturation value of specified light
@@ -96,6 +133,8 @@ class PyPHue:
     # Sets the saturation value for specified light
     def setSaturation(self, lightID, saturation):
         response = self.putLight(lightID, {'sat': saturation})
+        if self.cacheValues:
+            self.cachedLights[lightID]["saturation"] = saturation
         return response
 
     # Returns the hue value of spepcified light
@@ -106,6 +145,8 @@ class PyPHue:
     # Sets the hue value for specified light
     def setHue(self, lightID, hue):
         response = self.putLight(lightID, {'hue': hue})
+        if self.cacheValues:
+            self.cachedLights[lightID]["hue"] = hue
         return response
 
 
