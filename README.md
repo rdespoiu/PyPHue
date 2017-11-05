@@ -95,6 +95,7 @@ myHue.setHue('1', 45000)                    # Sets light '1' to a blue color   (
 myHue.turnOff('1')                          # Turns off light '1'
 
 myHue.toggle('2')                           # Flips the state of light '2'. (i.e. if off, turns it on and vice versa)
+myHue.getOnOff('2')                         # Returns the power state of light '2'      (True/False)
 myHue.getBrightness('2')                    # Returns the brightness value of light '2' (0 - 255)
 myHue.getSaturation('2')                    # Returns the saturation value of light '2' (0 - 255)
 myHue.getHue('2')                           # Returns the hue value of light '2'        (0 - 65535)
