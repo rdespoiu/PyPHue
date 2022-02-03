@@ -1,3 +1,6 @@
+# Archived on 2 February 2022
+I created this repository when I was in college and have not had the time to maintain it, so I am archiving it today. I'm glad some people managed to get a little use out of it! Please don't hesitate to reach out with any questions/concerns at roberto.despoiu@gmail.com
+
 # PyPHue
 ![Alt text](https://github.com/rdespoiu/PyPHue/blob/master/pyphue.png?raw=true)
 
